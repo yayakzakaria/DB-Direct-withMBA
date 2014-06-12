@@ -298,6 +298,7 @@ begin
   SortGrid1.RowCount := 2;
 
   SetLength(RowChecked, 0);
+  SetLength(RowError, 0);
 
   Form4.Show;
   for i := 1 to maxRow do begin

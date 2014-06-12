@@ -56,7 +56,6 @@ object Form1: TForm1
     ParentFont = False
     TabOrder = 3
     OnDrawCell = SortGrid1DrawCell
-    OnSelectCell = SortGrid1SelectCell
     SortOptions.CanSort = False
     SortOptions.SortStyle = ssNormal
     SortOptions.SortCaseSensitive = False

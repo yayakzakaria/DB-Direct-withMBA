@@ -1,8 +1,8 @@
 object Form6: TForm6
-  Left = 294
-  Top = 338
+  Left = 261
+  Top = 214
   Width = 870
-  Height = 640
+  Height = 613
   Caption = 'Load From MBA'
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -15,7 +15,7 @@ object Form6: TForm6
   OnShow = FormShow
   DesignSize = (
     854
-    602)
+    575)
   PixelsPerInch = 96
   TextHeight = 13
   object Label3: TLabel
@@ -29,8 +29,8 @@ object Form6: TForm6
   object SortGrid1: TSortGrid
     Left = 0
     Top = 64
-    Width = 858
-    Height = 840
+    Width = 854
+    Height = 492
     Anchors = [akLeft, akTop, akRight, akBottom]
     ColCount = 14
     FixedColor = 15780784
@@ -166,7 +166,7 @@ object Form6: TForm6
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Top = 583
+    Top = 556
     Width = 854
     Height = 19
     Panels = <

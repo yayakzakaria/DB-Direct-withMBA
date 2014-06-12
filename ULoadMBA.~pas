@@ -308,7 +308,7 @@ begin
     empTotal := iSheet.Cells[i, 9];
     if (Trim(empID) <> '') and (Trim(empTotal) <> '') and IsStrANumber(empTotal) then begin
       IBDatabase1.Close;
-      IBQuery1.SQL.Text := 'SELECT supplier, note FROM syssupplier WHERE name LIKE ''%' + empID + '%'' OR name LIKE ''' + StringReplace(empName, '''', '''''', [rfReplaceAll, rfIgnoreCase]) + '%''';
+      IBQuery1.SQL.Text := 'SELECT supplier, note FROM syssupplier WHERE name LIKE ''%(' + empID + ')''';// OR name LIKE ''' + StringReplace(empName, '''', '''''', [rfReplaceAll, rfIgnoreCase]) + '%''';
       IBQuery1.Open;
 
       SortGrid1.Cells[1, SortGrid1.RowCount-1] := DateToStr(DateTimePicker3.Date);

@@ -67,8 +67,6 @@ type
       var CheckBox, Combobox, Ellipsis: Boolean);
     procedure SortGrid1DrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
-    procedure SortGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
-      var CanSelect: Boolean);
     procedure SortGrid1SetChecked(Sender: TObject; ACol, ARow: Integer;
       State: Boolean);
     procedure BitBtn2Click(Sender: TObject);
@@ -309,6 +307,7 @@ begin
 
   SetLength(RowHeader, 0);
   SetLength(RowChecked, 0);
+  SetLength(RowError, 0);
   editRowHeader := -1;
   foundNumberRow := -1;
 
@@ -466,18 +465,11 @@ begin
       Date := StrToDate(SortGrid1.Cells[ACol, ARow]);
       editRowHeader := ARow;
       Visible := True;
-    end;
-  end;
-end;
-
-procedure TForm1.SortGrid1SelectCell(Sender: TObject; ACol, ARow: Integer;
-  var CanSelect: Boolean);
-begin
-  if (ACol = 1) or InArray(ARow, RowHeader) then
-  begin
+  end else begin
     DateTimePicker3.Visible := False;
     editRowHeader := -1;
   end;
+    end;
 end;
 
 procedure TForm1.SortGrid1SetChecked(Sender: TObject; ACol, ARow: Integer;
@@ -822,6 +814,7 @@ begin
       iSheet.Cells[iRow + 1, 1].Interior.Color := clMoneyGreen;
     end else begin
       iSheet.Cells[iRow + 1, 2].HorizontalAlignment := xlHAlignCenter;
+      iSheet.Cells[iRow + 1, 2].NumberFormat := '@';  // as Text
       iSheet.Cells[iRow + 1, 10].NumberFormat := '@';  // as Text
       iSheet.Cells[iRow + 1, 12].NumberFormat := '@';  // as Text
     end;
@@ -876,6 +869,7 @@ end;
 procedure TForm1.SavetoExcel1Click(Sender: TObject);
 const
   xlHAlignCenter = -4108;
+  xlRight = -4152;
   xlThin = 2;
 var
   iExcel: OleVariant;
@@ -950,7 +944,7 @@ begin
       iSheet.Cells[xlRow, 2].HorizontalAlignment := xlHAlignCenter;
       iSheet.Cells[xlRow, 3].HorizontalAlignment := xlHAlignCenter;
       iSheet.Cells[xlRow, 2].NumberFormat := LowerCase(ShortDateFormat);  // as Date
-      iSheet.Cells[xlRow, 5].NumberFormat := 'Rp #.##0';  // as Currency
+      iSheet.Cells[xlRow, 5].NumberFormat := '#.##0,00';  // as Currency
       iSheet.Cells[xlRow, 3].NumberFormat := '@';  // as Text
       iSheet.Cells[xlRow, 6].NumberFormat := '@';  // as Text
       iSheet.Cells[xlRow, 8].NumberFormat := '@';  // as Text
@@ -974,6 +968,13 @@ begin
     Form4.ProgressBar1.Position := iRow;
   end;
   Form4.Hide;
+
+  iSheet.Cells[xlRow, 4] := 'TOTAL AMOUNT';
+  iSheet.Cells[xlRow, 5].Formula := '=SUM(E3:E' + IntToStr(xlRow-1) + ')';
+  iSheet.Cells[xlRow, 4].HorizontalAlignment := xlRight;
+  iSheet.Range['D' + IntToStr(xlRow) + ':E'+ IntToStr(xlRow)].Borders.Weight := xlThin;
+  iSheet.Range['D' + IntToStr(xlRow) + ':E'+ IntToStr(xlRow)].Font.Bold := True;
+  iSheet.Range['D' + IntToStr(xlRow) + ':E'+ IntToStr(xlRow)].Interior.Color := clMoneyGreen;
 
   iSheet.Range['A1:K1'].EntireColumn.AutoFit;
   iSheet.Range['A1:K'+ IntToStr(xlRow-1)].Borders.Weight := xlThin;

@@ -262,7 +262,7 @@ object Form5: TForm5
       Top = 40
       Width = 115
       Height = 13
-      Caption = 'Version 0.9.0.16 RC'
+      Caption = 'Version 0.9.0.17 RC'
       IsControl = True
     end
     object Copyright: TLabel
@@ -282,6 +282,9 @@ object Form5: TForm5
       Color = clBtnFace
       Lines.Strings = (
         'Programmed by Yayak Zakaria'
+        ''
+        'Version 0.9.0.17RC - (11-06-2014)'
+        '- Fix some minor bugs'
         ''
         'Version 0.9.0.16RC - (10-06-2014)'
         '- Import MBA Payment List from Excel File'
